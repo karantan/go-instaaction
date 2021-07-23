@@ -1,7 +1,7 @@
 name: fleet
 on:
   repository_dispatch:
-    types: [my-event]
+    types: [dispatch-test]
 jobs:
   build:
     name: 'test'
@@ -10,7 +10,7 @@ jobs:
       - name: Run the test
         run: echo ${{ github.event.client_payload.foo }}
 
-  dispatch:
+  dispatchTest:
     needs: build
     strategy:
       matrix:
@@ -22,5 +22,5 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ${{ matrix.repo }}
-          event-type: my-event
+          event-type: dispatch-test
           client-payload: '{"foo": "bar, baz"}'
