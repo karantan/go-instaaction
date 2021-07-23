@@ -1,7 +1,11 @@
 package main
 
-import "instaaction/cmd"
+import (
+	"fmt"
+	"instaaction/cmd"
+)
 
 func main() {
+	fmt.Println("ignore this msg")
 	cmd.Execute()
 }
