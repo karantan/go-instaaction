@@ -1,0 +1,26 @@
+name: fleet
+on:
+  workflow_dispatch:
+    types: [my-event]
+jobs:
+  build:
+    name: 'test'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run the test
+        run: echo ${{ github.event.client_payload.foo }}
+
+  dispatch:
+    needs: build
+    strategy:
+      matrix:
+        repo: ["karantan/go-instaacton"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ matrix.repo }}
+          event-type: my-event
+          client-payload: '{"foo": "bar, baz"}'
