@@ -7,6 +7,17 @@ build this program and upload the executable binarys (for darwin and linux) unde
 It will also add a release description with the "Changelog".
 
 
+## Build the package with nix
+
+Run the following command:
+
+```bash
+$ nix-build -E "with import <nixpkgs> {}; callPackage ./default.nix {}"
+```
+
+The version of the program will be passed during the build process via `buildFlagsArray`
+in the default.nix.
+
 ## Add the package to NixOS
 
 Inject buildGoModule and nix-gitignore when calling default.nix. When we

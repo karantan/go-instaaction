@@ -1,5 +1,7 @@
 name: fleet
 on:
+  # NOTE: the repository_dispatch only triggers on the master branch, and it is not
+  # possible to specify a branch
   repository_dispatch:
     types: [dispatch-test]
 jobs:
