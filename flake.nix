@@ -1,9 +1,13 @@
 {
   description = "A very basic flake";
 
-  outputs = { self, nixpkgs }: {
-    packages.x86_64-darwin.default =
-      let pkgs = import nixpkgs { system = "x86_64-darwin"; };
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system: {
+      defaultPackage =
+      let
+        pkgs = import nixpkgs { inherit system; };
       in pkgs.buildGoModule rec {
         pname = "instaaction";
         version = "1.0.0";
@@ -19,5 +23,5 @@
         vendorSha256 = "17h0wlfyizjl7pyf218748nr29ik75hzijgy45grd9fwl4aacppd";
         ldflags = "-X instaaction/version.Version=${version}";
       };
-  };
+    });
 }
